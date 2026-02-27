@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-style: arial;
+            background: white;
+            color: black;
+        }
+
+        header,
+        footer {
+            background: black;
+            color: white;
+            padding: 15px 15px;
+            font-weight: 300;
+        }
+
+        .nav {
+            display: flex;
+            padding: 12px;
+            min-height: calc(100vh - 60px - 60px);
+        }
+
+        nav,
+        aside {
+            background: #f3f3f3;
+            ;
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+
+        nav {
+            width: 200px;
+        }
+
+        aside {
+            width: 200px;
+        }
+
+        main {
+            flex: 1;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+
+        nav h2,
+        aside h2 {
+            margin: 0 0 10px;
+            font-size: 15px;
+        }
+
+        nav ul {
+            margin: 0;
+            padding-left: 15px;
+            line-height: 1;
+        }
+
+        main h1 {
+            margin: 0 0 15px;
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: #eaf2ff;
+            border: 1px dashed #9bb7e6;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>머리부(header)</header>
+
+    <div class="nav">
+        <nav>
+            <h2>네비게이션(Nav)</h2>
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>Contant</li>
+            </ul>
+        </nav>
+        <main>
+            <h1>메인 콘텐츠(Main)</h1>
+            <div class="highlight-box">
+                양옆은 고정폭, 가운데는 가변폭!
+            </div>
+            <p class="hint">Hint. 가운데 영역은 <small>flex: 1</small>로 남는 공간을 차지합니다.</p>
+        </main>
+        <aside>
+            <h2>사이드바(Aside)</h2>
+            <p>공지/광고/프로필 등</p>
+        </aside>
+    </div>
+    <footer>바닥부(Footer)</footer>
+
+</body>
+
+</html>
