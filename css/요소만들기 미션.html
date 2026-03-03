@@ -12,9 +12,13 @@
 
         body {
             margin: 0;
-            font-style: arial;
+            font-family: arial;
             background: white;
             color: black;
+
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
         }
 
         header,
@@ -26,9 +30,10 @@
         }
 
         .nav {
-            display: flex;
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            gap: 12px;
             padding: 12px;
-            min-height: calc(100vh - 60px - 60px);
         }
 
         nav,
@@ -38,19 +43,10 @@
             padding: 15px;
         }
 
-        nav,
-        aside {
-            width: 200px;
-        }
-
-
         main {
-            flex: 1;
             background: #fff;
             border: 1px solid #ddd;
             padding: 15px;
-            margin-left: 12px;
-            margin-right: 12px;
         }
 
         nav h2,
@@ -77,6 +73,12 @@
             padding: 15px;
             margin-bottom: 10px;
         }
+
+        @media (max-width: 768px) {
+            .nav {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
@@ -98,6 +100,8 @@
                 양옆은 고정폭, 가운데는 가변폭!
             </div>
             <p class="hint">Hint. 가운데 영역은 <small>flex: 1</small>로 남는 공간을 차지합니다.</p>
+            <br>
+            <p>Grid에서는 <small>grid-template-columns: 200px 1fr 200px</small>로 설정했습니다.</p>
         </main>
         <aside>
             <h2>사이드바(Aside)</h2>
