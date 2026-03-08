@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Card</title>
+
+    <style>
+        .card {
+            width: 250px;
+            height: 225px;
+            margin-top: 16px;
+            margin-left: 16px;
+
+
+        }
+
+        .top-box {
+            width: 250px;
+            height: 150px;
+            background: #FFB9B9;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+
+        }
+
+        .bottom-box {
+            width: 250px;
+            height: 75px;
+            background: white;
+            padding: 6px 8px;
+            box-sizing: border-box;
+            border: 1px solid #FFB9B9;
+        }
+
+        .text {
+            font-size: 12px;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+
+        .group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .circle {
+            width: 24px;
+            height: 24px;
+            background: #D9D9D9;
+            border-radius: 999%;
+        }
+
+        .name {
+            font-size: 12px;
+            font-weight: 400;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <div class="top-box"></div>
+
+        <div class="bottom-box">
+            <div class="text">안녕하세요. 텍스트입니다.</div>
+
+            <div class="group">
+                <div class="circle"></div>
+                <div class="name">휴양조</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
