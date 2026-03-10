@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript 연산자 퀴즈</title>
+
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      .quiz-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .question {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+      }
+
+      .result {
+        margin-left: 10px;
+        font-weight: bold;
+      }
+
+      .correct {
+        color: #4caf50;
+      }
+
+      .incorrect {
+        color: #f44336;
+      }
+
+      input[type="text"] {
+        width: 100px;
+        padding: 5px;
+        margin: 5px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px 0;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .explanation {
+        display: none;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #e8f5e9;
+        border-radius: 5px;
+      }
+
+      .show-explanation {
+        background-color: #2196f3;
+      }
+
+      .show-explanation:hover {
+        background-color: #1976d2;
+      }
+
+      .q-explanation {
+        display: none;
+        margin-top: 8px;
+        padding: 8px 10px;
+        background-color: #fff8e1;
+        border-left: 3px solid #ffb300;
+        border-radius: 4px;
+        color: #5d4037;
+        font-size: 0.95rem;
+      }
+
+      .q-answer {
+        margin-top: 6px;
+        font-weight: 600;
+        color: #3e2723;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="quiz-container">
+      <h1>JavaScript 연산자 퀴즈</h1>
+      <p>각 연산의 결과를 입력하세요. 문자열은 따옴표를 포함해서 입력하세요.</p>
+
+      <div id="questions"></div>
+
+      <button onclick="checkAnswers()">정답 확인하기</button>
+      <button class="show-explanation" onclick="toggleExplanation()">
+        설명 보기/숨기기
+      </button>
+
+      <div id="explanation" class="explanation">
+        <h3>연산자 설명</h3>
+
+        <h4>1. 동등 연산자(==)</h4>
+        <ul>
+          <li>값만 비교하며, 타입이 다르면 자동으로 타입을 변환하여 비교</li>
+          <li>느슨한 비교라고도 함</li>
+          <li>예: "123" == 123 은 true</li>
+        </ul>
+
+        <h4>2. 일치 연산자(===)</h4>
+        <ul>
+          <li>값과 타입을 모두 비교</li>
+          <li>엄격한 비교라고도 함</li>
+          <li>예: "123" === 123 은 false</li>
+        </ul>
+
+        <h4>3. OR 연산자(||)</h4>
+        <ul>
+          <li>첫 번째 truthy 값을 반환</li>
+          <li>falsy 값들: "", 0, null, undefined, false, NaN</li>
+          <li>예: "" || "값" 은 "값"</li>
+        </ul>
+
+        <h4>4. Nullish 병합 연산자(??)</h4>
+        <ul>
+          <li>null 또는 undefined일 때만 대체 값을 사용</li>
+          <li>빈 문자열이나 0도 유효한 값으로 취급</li>
+          <li>예: 0 ?? 42 는 0</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          question: '"123" == 123',
+          answer: "true",
+          explanation: "동등 연산자는 타입 변환 후 비교합니다.",
+        },
+        {
+          question: '"123" === 123',
+          answer: "false",
+          explanation: "일치 연산자는 타입까지 비교합니다.",
+        },
+        {
+          question: "null == undefined",
+          answer: "true",
+          explanation: "동등 연산자는 null과 undefined를 같다고 판단합니다.",
+        },
+        {
+          question: "null === undefined",
+          answer: "false",
+          explanation: "일치 연산자는 타입이 다르므로 다르다고 판단합니다.",
+        },
+        {
+          question: "0 == false",
+          answer: "true",
+          explanation: "false는 0으로 변환되어 비교됩니다.",
+        },
+        {
+          question: "0 === false",
+          answer: "false",
+          explanation: "숫자와 불리언은 다른 타입입니다.",
+        },
+        {
+          question: '"" || "값"',
+          answer: '"값"',
+          explanation: '빈 문자열은 falsy이므로 "값"이 반환됩니다.',
+        },
+        {
+          question: '"" ?? "값"',
+          answer: '""',
+          explanation: "빈 문자열은 유효한 값이므로 그대로 반환됩니다.",
+        },
+        {
+          question: "0 || 42",
+          answer: "42",
+          explanation: "0은 falsy이므로 42가 반환됩니다.",
+        },
+        {
+          question: "0 ?? 42",
+          answer: "0",
+          explanation: "0은 유효한 값이므로 그대로 반환됩니다.",
+        },
+      ];
+
+      function createQuestions() {
+        const container = document.getElementById("questions");
+
+        questions.forEach((q, i) => {
+          const div = document.createElement("div");
+          div.className = "question";
+
+          div.innerHTML = `
+            <p>문제 ${i + 1}: ${q.question} = 
+              <input type="text" id="answer${i}" placeholder="답을 입력하세요">
+              <span class="result" id="result${i}"></span>
+            </p>
+            <div id="qexp${i}" class="q-explanation"></div>
+          `;
+
+          container.appendChild(div);
+        });
+      }
+
+      function checkAnswers() {
+        let correctCount = 0;
+
+        questions.forEach((q, i) => {
+          const userAnswer = document.getElementById(`answer${i}`).value.trim();
+          const resultSpan = document.getElementById(`result${i}`);
+          const expDiv = document.getElementById(`qexp${i}`);
+
+          if (userAnswer === q.answer) {
+            resultSpan.textContent = "✓ 정답";
+            resultSpan.className = "result correct";
+            correctCount++;
+
+            expDiv.style.display = "none";
+            expDiv.textContent = "";
+          } else {
+            resultSpan.textContent = "✗ 오답";
+            resultSpan.className = "result incorrect";
+
+            expDiv.innerHTML = `
+              ${q.explanation}
+              <div class="q-answer">정답: ${q.answer}</div>
+            `;
+            expDiv.style.display = "block";
+          }
+        });
+
+        alert(`총 ${questions.length}문제 중 ${correctCount}문제를 맞추셨습니다!`);
+      }
+
+      function toggleExplanation() {
+        const explanation = document.getElementById("explanation");
+        const isHidden = window.getComputedStyle(explanation).display === "none";
+
+        explanation.style.display = isHidden ? "block" : "none";
+      }
+
+      createQuestions();
+    </script>
+  </body>
+</html>
