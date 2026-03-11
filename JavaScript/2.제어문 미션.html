@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 제어문 퀴즈</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .quiz-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+
+        .question h3 {
+            margin-top: 0;
+        }
+
+        pre {
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 12px;
+            overflow-x: auto;
+        }
+
+        code {
+            line-height: 1.6;
+        }
+
+        .inline-input {
+            display: inline-block;
+            min-width: 120px;
+            padding: 2px 6px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+            font-size: 14px;
+        }
+
+        .result {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: #4caf50;
+        }
+
+        .incorrect {
+            color: #f44336;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 10px 10px 0;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .show-explanation {
+            background-color: #2196f3;
+        }
+
+        .show-explanation:hover {
+            background-color: #1976d2;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+        }
+
+        .answers-hint {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .q-explanation {
+            display: none;
+            margin-top: 8px;
+            padding: 8px 10px;
+            background-color: #fff8e1;
+            border-left: 3px solid #ffb300;
+            border-radius: 4px;
+            color: #5d4037;
+            font-size: 0.95rem;
+        }
+
+        .q-answer {
+            margin-top: 6px;
+            font-weight: 600;
+            color: #3e2723;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quiz-container">
+
+        <h1>JavaScript 제어문 퀴즈 (빈칸 채우기)</h1>
+
+        <p>다음 코드의 빈칸(____)에 들어갈 조건식 또는 제어 구문을 입력하세요.</p>
+
+        <div id="questions"></div>
+
+        <button onclick="checkAnswers()">정답 확인하기</button>
+
+        <button class="show-explanation" onclick="toggleExplanation()">설명 보기/숨기기</button>
+
+        <div id="explanation" class="explanation">
+
+            <h3>제어문 설명</h3>
+
+            <h4>조건문</h4>
+
+            <ul>
+                <li>if : 조건이 true일 때 실행</li>
+                <li>if else if else : 조건을 순서대로 검사</li>
+                <li>switch : case가 일치하면 실행</li>
+                <li>삼항 연산자 : 조건 ? 값1 : 값2</li>
+            </ul>
+
+            <h4>반복문</h4>
+
+            <ul>
+                <li>while : 조건이 true인 동안 반복</li>
+                <li>for : 초기식 조건식 증감식</li>
+            </ul>
+
+            <h4>반복 제어</h4>
+
+            <ul>
+                <li>break : 반복 즉시 종료</li>
+                <li>continue : 다음 반복으로 이동</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const questions = [
+
+            {
+                title: "[if] 사용자명 미입력 체크",
+                desc: "username이 비어있을 때 경고 출력",
+                explanation: "빈 문자열은 falsy",
+                code: `const username = "";
+if (____) {
+console.log("사용자명을 입력하세요");
+}`,
+                acceptableAnswers: ["!username", 'username==""', 'username===""', "username.length===0", "username.length==0"]
+            },
+
+            {
+                title: "[if-else] 짝수 홀수",
+                desc: "짝수면 even 출력",
+                explanation: "나머지 연산자 사용",
+                code: `const num = 11;
+if (____) {
+console.log("even");
+} else {
+console.log("odd");
+}`,
+                acceptableAnswers: ["num%2===0", "(num%2)===0", "num % 2 === 0"]
+            },
+
+            {
+                title: "[while] 3회 반복",
+                desc: "3번 출력",
+                explanation: "i가 3 미만",
+                code: `let i = 0;
+while (____) {
+console.log("학습중...");
+i++;
+}`,
+                acceptableAnswers: ["i<3", "i < 3"]
+            },
+
+            {
+                title: "[while] 카운트다운",
+                desc: "5부터 1까지 출력",
+                explanation: "0보다 큰 동안 반복",
+                code: `let n = 5;
+while (____) {
+console.log(n);
+n--;
+}`,
+                acceptableAnswers: ["n>0", "n > 0"]
+            },
+
+            {
+                title: "[for] 3의 배수",
+                desc: "1~15 중 3의 배수 출력",
+                explanation: "나머지 0",
+                code: `for (let k = 1; k <= 15; k++) {
+if (____) {
+console.log(k);
+}
+}`,
+                acceptableAnswers: ["k%3===0", "k % 3 === 0"]
+            }
+
+        ];
+
+        function renderQuestions() {
+
+            const container = document.getElementById("questions");
+
+            questions.forEach((q, idx) => {
+
+                const div = document.createElement("div");
+
+                div.className = "question";
+
+                const escaped = q.code
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;");
+
+                const codeWithInput = escaped.replace(
+                    "____",
+                    `<input type="text" class="inline-input" id="answer${idx}">`
+                );
+
+                div.innerHTML = `
+<h3>문제 ${idx + 1}. ${q.title}</h3>
+<p class="answers-hint">${q.desc}</p>
+<pre><code>${codeWithInput}</code></pre>
+<span class="result" id="result${idx}"></span>
+<div id="qexp${idx}" class="q-explanation"></div>
+`;
+
+                container.appendChild(div);
+
+            });
+
+        }
+
+        function normalize(str) {
+            return (str || "").replace(/\s+/g, "").trim();
+        }
+
+        function checkAnswers() {
+
+            let correct = 0;
+
+            questions.forEach((q, idx) => {
+
+                const input = document.getElementById(`answer${idx}`);
+
+                const user = normalize(input ? input.value : "");
+
+                const resultSpan = document.getElementById(`result${idx}`);
+
+                const expDiv = document.getElementById(`qexp${idx}`);
+
+                const ok = (q.acceptableAnswers || []).some(
+                    (ans) => normalize(ans) === user
+                );
+
+                if (ok) {
+
+                    resultSpan.textContent = "✓ 정답";
+                    resultSpan.className = "result correct";
+
+                    correct++;
+
+                    if (expDiv) {
+                        expDiv.style.display = "none";
+                        expDiv.textContent = "";
+                    }
+
+                }
+
+                else {
+
+                    resultSpan.textContent = "✗ 오답";
+                    resultSpan.className = "result incorrect";
+
+                    if (expDiv) {
+
+                        const firstAns = q.acceptableAnswers[0] || "";
+
+                        const explanationText = q.explanation || "";
+
+                        expDiv.innerHTML = `${explanationText}<div class="q-answer">정답: ${firstAns}</div>`;
+
+                        expDiv.style.display = "block";
+
+                    }
+
+                }
+
+            });
+
+            alert(`총 ${questions.length}문제 중 ${correct}문제를 맞추셨습니다!`);
+
+        }
+
+        function toggleExplanation() {
+
+            const explanation = document.getElementById("explanation");
+
+            const isHidden = window.getComputedStyle(explanation).display === "none";
+
+            explanation.style.display = isHidden ? "block" : "none";
+
+        }
+
+        renderQuestions();
+
+    </script>
+
+</body>
+
+</html>

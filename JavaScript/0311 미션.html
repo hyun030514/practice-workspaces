@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 입력 양식 이벤트 연습하기</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: white;
+            font-family: Arial, "맑은 고딕", sans-serif;
+            color: black;
+        }
+
+        .wrap {
+            width: 760px;
+            margin: 18px auto;
+        }
+
+        h1 {
+            margin: 0 0 28px 0;
+            font-size: 38px;
+            font-weight: 800;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label.main-label {
+            display: block;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #bfbfbf;
+            background-color: #f7f7f7;
+            padding: 10px 12px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select {
+            height: 42px;
+        }
+
+        textarea {
+            height: 125px;
+            resize: none;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #888;
+        }
+
+        /* 사진처럼 클릭했을 때 연한 블루 느낌 */
+        .focused {
+            background-color: #e8f0fe !important;
+            border-color: #9bbcff !important;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .radio-group label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .count-text {
+            margin-top: 8px;
+            font-size: 15px;
+        }
+
+        .agree-box {
+            margin-top: 18px;
+            margin-bottom: 18px;
+            padding: 10px 12px;
+        }
+
+        .agree-box label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .agree-success {
+            background-color: #c9efc9;
+        }
+
+        .agree-error {
+            background-color: #ffd9d9;
+        }
+
+        button {
+            width: 94px;
+            height: 40px;
+            border: none;
+            background-color: #2d95e5;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #197fd0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>사용자 입력 양식 이벤트 연습하기</h1>
+
+        <form name="eventForm" id="eventForm">
+            <div class="form-group">
+                <label for="username" class="main-label">이름</label>
+                <input type="text" name="username" id="username" placeholder="이름을 입력하세요" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="main-label">이메일</label>
+                <input type="email" name="email" id="email" placeholder="example@domain.com" required>
+            </div>
+
+            <div class="form-group">
+                <label class="main-label">성별</label>
+                <div class="radio-group">
+                    <label for="male">
+                        <input type="radio" name="gender" id="male" value="남자" required>
+                        남자
+                    </label>
+
+                    <label for="female">
+                        <input type="radio" name="gender" id="female" value="여자" required>
+                        여자
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="date" class="main-label">참여 일자 선택</label>
+                <select name="date" id="date" required>
+                    <option value="">-- 날짜 선택 --</option>
+                    <option value="2026-03-11">2026년 3월 11일</option>
+                    <option value="2026-03-12">2026년 3월 12일</option>
+                    <option value="2026-03-13">2026년 3월 13일</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="request" class="main-label">요청 사항</label>
+                <textarea name="request" id="request" maxlength="500" placeholder="요청 사항을 입력하세요"></textarea>
+                <div class="count-text"><span id="textCount">0</span>/500자</div>
+            </div>
+
+            <div class="agree-box" id="agreeBox">
+                <label for="agree">
+                    <input type="checkbox" name="agree" id="agree">
+                    개인정보 수집에 동의합니다.
+                </label>
+            </div>
+
+            <button type="submit">신청하기</button>
+        </form>
+    </div>
+
+    <script>
+        const $form = document.forms.eventForm;
+        const $username = $form.username;
+        const $email = $form.email;
+        const $date = $form.date;
+        const $request = $form.request;
+        const $agree = $form.agree;
+        const $textCount = document.getElementById('textCount');
+        const $agreeBox = document.getElementById('agreeBox');
+        $form.addEventListener('focusin', (e) => {
+            if (
+                e.target.tagName === 'INPUT' ||
+                e.target.tagName === 'SELECT' ||
+                e.target.tagName === 'TEXTAREA'
+            ) {
+                if (e.target.type !== 'radio' && e.target.type !== 'checkbox') {
+                    e.target.classList.add('focused');
+                }
+            }
+        });
+        $form.addEventListener('focusout', (e) => {
+            if (
+                e.target.tagName === 'INPUT' ||
+                e.target.tagName === 'SELECT' ||
+                e.target.tagName === 'TEXTAREA'
+            ) {
+                if (e.target.type !== 'radio' && e.target.type !== 'checkbox') {
+                    e.target.classList.remove('focused');
+                }
+            }
+        });
+        $request.addEventListener('input', (e) => {
+            let len = e.target.value.length;
+            $textCount.textContent = len;
+        });
+        $agree.addEventListener('change', () => {
+            if ($agree.checked) {
+                $agreeBox.classList.remove('agree-error');
+                $agreeBox.classList.add('agree-success');
+            } else {
+                $agreeBox.classList.remove('agree-success');
+            }
+        });
+
+        $form.addEventListener('submit', (e) => {
+            if (!$form.checkValidity()) {
+                return;
+            }
+
+            if ($date.value === '') {
+                e.preventDefault();
+                alert('참여 일자를 선택해주세요.');
+                $date.focus();
+                return;
+            }
+
+            if (!$agree.checked) {
+                e.preventDefault();
+                alert('개인정보 수집에 동의해주세요.');
+                $agreeBox.classList.remove('agree-success');
+                $agreeBox.classList.add('agree-error');
+                return;
+            }
+            e.preventDefault();
+            alert('신청이 완료되었습니다.');
+        });
+    </script>
+</body>
+
+</html>
